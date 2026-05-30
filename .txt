@@ -1,0 +1,110 @@
+aegis/
+
+├── README.md
+├── .gitignore
+├── .env.example
+├── docker-compose.yml
+
+├── docs/
+│   ├── architecture/
+│   │   ├── hld.md
+│   │   ├── lld.md
+│   │   ├── sequence_diagrams.md
+│   │   └── event_flow.md
+│   │
+│   ├── api/
+│   │   └── openapi.yaml
+│   │
+│   └── screenshots/
+
+├── services/
+│
+│   ├── ingestion-go/
+│   │
+│   │   ├── cmd/
+│   │   │   └── server/
+│   │   │       └── main.go
+│   │   │
+│   │   ├── internal/
+│   │   │   ├── api/
+│   │   │   ├── handlers/
+│   │   │   ├── workerpool/
+│   │   │   ├── validator/
+│   │   │   ├── normalizer/
+│   │   │   ├── queue/
+│   │   │   ├── config/
+│   │   │   └── logger/
+│   │   │
+│   │   ├── pkg/
+│   │   │   └── models/
+│   │   │
+│   │   ├── Dockerfile
+│   │   ├── go.mod
+│   │   └── go.sum
+│
+│   ├── intelligence-py/
+│   │
+│   │   ├── app/
+│   │   │   ├── api/
+│   │   │   ├── consumers/
+│   │   │   ├── anomaly/
+│   │   │   ├── timeline/
+│   │   │   ├── rca/
+│   │   │   ├── storage/
+│   │   │   ├── embeddings/
+│   │   │   └── config/
+│   │   │
+│   │   ├── tests/
+│   │   ├── requirements.txt
+│   │   └── Dockerfile
+│
+│   ├── event-generator/
+│   │
+│   │   ├── app/
+│   │   │   ├── catalog/
+│   │   │   ├── state_machine/
+│   │   │   ├── incidents/
+│   │   │   ├── probability/
+│   │   │   ├── emitter/
+│   │   │   └── config/
+│   │   │
+│   │   ├── requirements.txt
+│   │   └── Dockerfile
+│
+│   └── dashboard/
+│       │
+│       ├── src/
+│       ├── public/
+│       ├── package.json
+│       └── Dockerfile
+│
+├── infra/
+│
+│   ├── postgres/
+│   │   ├── init.sql
+│   │   └── migrations/
+│   │
+│   ├── redis/
+│   │
+│   ├── monitoring/
+│   │   ├── prometheus.yml
+│   │   └── grafana/
+│   │
+│   └── scripts/
+│       ├── bootstrap.sh
+│       └── seed_data.sh
+│
+├── shared/
+│
+│   ├── schemas/
+│   │   ├── event.schema.json
+│   │   ├── incident.schema.json
+│   │   └── rca.schema.json
+│   │
+│   └── examples/
+│       ├── healthy_events.json
+│       └── incident_events.json
+│
+└── tests/
+    ├── integration/
+    └── load/

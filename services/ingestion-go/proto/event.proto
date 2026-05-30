@@ -1,0 +1,36 @@
+// this defines the type of data that will be sent/received
+syntax = "proto3";
+
+// protobuf namesapce (avoids name conflicts, package1.name vs package2.name)
+package aegis;
+
+// this defines where the generated Go code will be placed (import path)
+option go_package = "./proto";
+
+// defines the structure of sent dataw
+message Event {
+    string event_id = 1;
+
+    string event_type = 2;
+
+    string source = 3;
+
+    string severity = 4;
+
+    string timestamp = 5;
+
+    string payload = 6;
+}
+
+// defines the structure of the response data
+message Ack {
+    string status = 1;
+}
+
+// defines the gRPC service and its method(s)
+service EventIngestionService {
+    // the method takes an Event message and returns an Ack message
+    rpc SendEvent(Event) returns (Ack);
+}
+
+

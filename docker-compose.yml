@@ -1,0 +1,35 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: aegis
+      POSTGRES_PASSWORD: aegis
+      POSTGRES_DB: aegis
+    ports:
+      - "5432:5432"
+
+  ingestion-go:
+    build:
+      context: ./services/ingestion-go
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+
+  intelligence-py:
+    build:
+      context: ./services/intelligence-py
+    depends_on:
+      - redis
+      - postgres
+
+  event-generator:
+    build:
+      context: ./services/event-generator
+    depends_on:
+      - ingestion-go
