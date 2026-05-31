@@ -1,13 +1,13 @@
 package main
 
 import (
+	"ingestion-go/internal/middleware"
 	"ingestion-go/internal/queue"
 	"ingestion-go/internal/server"
 	pb "ingestion-go/proto"
 	"net"
 	"os"
 	"os/signal"
-	"time"
 
 	"google.golang.org/grpc"
 )
@@ -21,7 +21,7 @@ func main() {
 	ingestionServer := server.NewIngestionServer(publisher)
 
 	// next we need is grpc server to listen to the incoming requests and pass it to the ingestion server
-	grpcServer := grpc.NewServer()
+	grpcServer := grpc.NewServer(grpc.UnaryInterceptor(middleware.IngestionInterceptor))
 
 	// register the ingestion server with the grpc server
 	pb.RegisterEventIngestionServiceServer(grpcServer, ingestionServer)
@@ -42,6 +42,5 @@ func main() {
 	signal.Notify(shutdownCh, os.Interrupt)
 	<-shutdownCh
 	println("Shutting down server gracefully in 3 seconds...")
-	time.Sleep(3 * time.Second)
 	grpcServer.GracefulStop()
 }

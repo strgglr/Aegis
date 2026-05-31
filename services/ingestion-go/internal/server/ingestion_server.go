@@ -4,6 +4,7 @@ import (
 	"context"
 	"ingestion-go/internal/queue"
 	pb "ingestion-go/proto"
+	"log"
 )
 
 type IngestionServer struct {
@@ -14,6 +15,8 @@ type IngestionServer struct {
 
 func (is *IngestionServer) SendEvent(ctx context.Context, event *pb.Event) (*pb.Ack, error) {
 	is.publisher.Publish(event)
+	log.Printf("Received event: %v", event)
+	// return nil, errors.New("Failed to publish event")
 	return &pb.Ack{Status: "Event received successfully"}, nil
 }
 
